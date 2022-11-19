@@ -5,6 +5,10 @@
     "action": {
         "default_popup": "index.html"
     },
+    "permissions": [
+        "tabs",
+        "activeTab"
+    ],
     "content_scripts": [
         {
             "js": [
@@ -14,5 +18,9 @@
                 "https://www.google.com/*"
             ]
         }
-    ]
+    ],
+    "background": {
+        "service_worker": "src/background.ts",
+        "type": "module"
+    }
 }

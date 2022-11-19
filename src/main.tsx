@@ -8,6 +8,9 @@ sheet.replaceSync(style);
 
 const root = document.createElement('div');
 root.id = 'agora-root';
+root.style.position = 'absolute';
+root.style.top = '15%';
+root.style.left = '50%';
 document.body.append(root);
 const shadow = root.attachShadow({ mode: 'open' });
 shadow.adoptedStyleSheets = [sheet];
