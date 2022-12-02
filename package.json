@@ -8,12 +8,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@headlessui/react": "^1.7.3",
-    "@heroicons/react": "^2.0.13",
+    "@radix-ui/react-popover": "^0.1.6",
     "@types/chrome": "^0.0.200",
+    "cmdk": "^0.1.20",
     "cva": "npm:class-variance-authority@^0.2.4",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "framer-motion": "^6.5.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "@crxjs/vite-plugin": "^1.0.14",
@@ -23,6 +24,7 @@
     "@vitejs/plugin-react": "^1.0.7",
     "autoprefixer": "^10.4.13",
     "postcss": "^8.4.18",
+    "sass": "^1.56.1",
     "tailwindcss": "^3.2.1",
     "typescript": "^4.5.4",
     "vite": "^2.9.0"

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import Search from './components/Search';
+import { RaycastCMDK } from './components/Palette';
 
 function App() {
   // states for port and tabs
@@ -19,7 +19,7 @@ function App() {
   }, []);
 
   // render main combobox
-  return <Search port={port!!} tabs={tabs} />;
+  return <RaycastCMDK />;
 }
 
 export default App;

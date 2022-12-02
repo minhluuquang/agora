@@ -1,3 +1,7 @@
+@import url('./global.css');
+@import url('./palette.css');
+@import url('./icons.css');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
