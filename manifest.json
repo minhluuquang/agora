@@ -1,0 +1,40 @@
+{
+    "manifest_version": 3,
+    "name": "CRXJS React Vite Example",
+    "version": "1.0.0",
+    "action": {
+        "default_popup": "index.html"
+    },
+    "permissions": [
+        "tabs",
+        "activeTab",
+        "bookmarks",
+        "browsingData",
+        "history",
+        "scripting",
+        "search"
+    ],
+    "content_scripts": [
+        {
+            "js": [
+                "src/content.tsx"
+            ],
+            "matches": [
+                "https://www.google.com/*"
+            ]
+        }
+    ],
+    "commands": {
+        "open-omni": {
+            "suggested_key": {
+                "default": "Ctrl+Shift+K",
+                "mac": "Command+Shift+K"
+            },
+            "description": "Open command menu"
+        }
+    },
+    "background": {
+        "service_worker": "src/background.ts",
+        "type": "module"
+    }
+}
