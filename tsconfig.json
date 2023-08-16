@@ -12,6 +12,7 @@
     /* Bundler mode */
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
+    "allowJs": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
@@ -30,7 +31,8 @@
     }
   },
   "include": [
-    "src"
+    "src",
+    "twind.config.js"
   ],
   "references": [
     {

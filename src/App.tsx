@@ -11,18 +11,31 @@ import {
   CommandShortcut,
 } from '@/components/ui/command';
 
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from '@/components/ui/dialog';
-
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { cn } from './lib/utils';
 
 export function App() {
+  const [isOpen, setOpen] = useState(true);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const handleKeyDown = (event: MouseEvent) => {
+    if (containerRef && containerRef.current) {
+      if (!event.composedPath().includes(containerRef.current)) {
+        setOpen(false);
+      }
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener('click', handleKeyDown);
+
+    // cleanup this component
+    return () => {
+      window.removeEventListener('click', handleKeyDown);
+    };
+  }, [containerRef]);
+
   // states for port and tabs
   const [port, setPort] = useState<chrome.runtime.Port>();
   const [tabs, setTabs] = useState<chrome.tabs.Tab[]>([]);
@@ -36,26 +49,24 @@ export function App() {
         setTabs(msg.data);
       }
     });
+    chrome.runtime.onMessage.addListener(function (msg) {
+      if (msg.name === 'open-agora') {
+        setOpen(true);
+        if (inputRef && inputRef.current) {
+          inputRef.current.focus();
+        }
+      }
+    });
     setPort(p);
   }, []);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      port?.postMessage({ action: 'getTabs' });
-      port?.onMessage.addListener(function (msg) {
-        if (msg.name === 'allTabs') {
-          setTabs(msg.data);
-        }
-      });
-    }, 5000);
-
-    return () => clearInterval(interval); // Cleanup the interval on component unmount
-  }, []);
-
   return (
-    <div className='w-96'>
-      <Command className='rounded-lg border shadow-md '>
-        <CommandInput placeholder='Type a command or search...' />
+    <div ref={containerRef} className={(cn('w-96'), isOpen ? '' : 'hidden')}>
+      <Command className='rounded-lg border shadow-md'>
+        <CommandInput
+          ref={inputRef}
+          placeholder='Type a command or search...'
+        />
         <CommandList>
           <CommandEmpty>No results found.</CommandEmpty>
           <CommandGroup heading='Tabs'>
@@ -63,10 +74,15 @@ export function App() {
               return (
                 <CommandItem
                   onSelect={() => {
-                    port?.postMessage({ action: 'selectTab', data: tab });
+                    port?.postMessage({
+                      action: 'selectTab',
+                      data: tab,
+                    });
                   }}
                   key={tab.id}
-                  value={tab.id?.toString()}
+                  value={
+                    (tab?.id?.toString() ?? '') + (tab?.title?.toString() ?? '')
+                  }
                 >
                   {tab.favIconUrl ? (
                     <img src={tab.favIconUrl} className='mr-2 h-4 w-4' />
