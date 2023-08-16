@@ -7,7 +7,7 @@ const sheet = new CSSStyleSheet();
 sheet.replaceSync(style);
 
 const root = document.createElement('div');
-root.id = 'omni-root';
+root.id = 'agora-root';
 root.style.position = 'absolute';
 root.style.top = '15%';
 root.style.left = '40%';
